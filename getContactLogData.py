@@ -7,15 +7,17 @@ print(contactLogSheet['A2'].value)
 # Cycle through all the rows of our contact log data
 for row in range(2, 1320):
     print('Row #: ' + str(row))
-    # Go through each cell in the row to get the necessary information
+    # Go through each cell in the row to get clientID, time, and service
     for cell in range(1, 5):
         clientID = contactLogSheet['A'+str(row)].value
         time = contactLogSheet['C' + str(row)].value
         service = contactLogSheet['D' + str(row)].value
+        # Divide the time by 2 if the service is CT & DC
         if (service == 'CT & DC'):
             time = time/2
     # Now that we've gotten the necessary information from this row,
-    # take our stored values, copy the rest of the necessary information for this client from the Ref tab,
+    # take our stored values, find the corresponding row in the Ref tab,
+    # copy the rest of the necessary information for this client,
     # and create a new row in our data set sheet with the complete information set
     refSheet = wb.get_sheet_by_name('Ref')
     for refRow in range(2, refSheet.max_row + 1):
