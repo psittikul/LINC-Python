@@ -1,8 +1,6 @@
 import openpyxl
-wb = openpyxl.load_workbook('LINC Demographics for LVAIC.xlsx')
-print(type(wb))
+wb = openpyxl.load_workbook('LINC Demographics for LVAIC_2.xlsx')
 contactLogSheet = wb.get_sheet_by_name('Contact Log Info')
-print(contactLogSheet['A2'].value)
 
 
 
@@ -11,8 +9,7 @@ print(contactLogSheet['A2'].value)
 
 
 # Cycle through all the rows of our contact log data
-for row in range(2, 1321):
-    print('Row #: ' + str(row))
+for row in range(2, 1320):
     # Go through each cell in the row to get clientID, time, and service
     for cell in range(1, 5):
         clientID = contactLogSheet['A'+str(row)].value
@@ -29,7 +26,6 @@ for row in range(2, 1321):
         # If this row is the client corresponding to the data we got from the current contact log data row,
         # fill in the rest of the necessary data, grabbing what info you need from the ref sheet
         if refSheet['A'+str(refRow)].value == clientID:
-            print('Client #: ' + str(refSheet['A'+str(refRow)].value), refSheet['D'+str(refRow)].value)
             refSheet = wb.get_sheet_by_name('Ref')
             customer = refSheet['B'+str(refRow)].value
             intakeDate = refSheet['C'+str(refRow)].value
@@ -47,7 +43,6 @@ for row in range(2, 1321):
             def multipleServices(service, serviceName, time):
                 if service == 'CT & DC':
                     time = time / 2
-                    print(time)
                     testSheet = wb.get_sheet_by_name('Test')
                     newRow = str(testSheet.max_row + 1)
                     testSheet['A' + newRow].value = clientID
@@ -63,7 +58,7 @@ for row in range(2, 1321):
                     testSheet['K' + newRow].value = rentOwn
                     testSheet['M' + newRow].value = time
                     testSheet['N' + newRow].value = category
-                    wb.save('LINC Demographics for LVAIC.xlsx')
+                    wb.save('LINC Demographics for LVAIC_2.xlsx')
                     newRow = str(testSheet.max_row + 1)
                     refSheet = wb.get_sheet_by_name('Ref')
                     customer_2 = refSheet['B' + str(refRow + 1)].value
@@ -107,7 +102,7 @@ for row in range(2, 1321):
                         testSheet['K' + newRow].value = rentOwn
                         testSheet['M' + newRow].value = time
                         testSheet['N' + newRow].value = category
-                        wb.save('LINC Demographics for LVAIC.xlsx')
+                        wb.save('LINC Demographics for LVAIC_2.xlsx')
                     # If this current refRow is not the correct service, check the rows above and below for the correct service row
                     else:
                         refSheet = wb.get_sheet_by_name('Ref')
@@ -138,7 +133,7 @@ for row in range(2, 1321):
                             testSheet['K' + newRow].value = checkRentOwn
                             testSheet['M' + newRow].value = time
                             testSheet['N' + newRow].value = category
-                            wb.save('LINC Demographics for LVAIC.xlsx')
+                            wb.save('LINC Demographics for LVAIC_2.xlsx')
                         elif 'CT' in refSheet['D' + str(refRow + 1)].value or 'Community Transition' in refSheet[
                                     'D' + str(refRow + 1)].value:
                             checkCustomer = refSheet['B' + str(refRow + 1)].value
@@ -166,7 +161,7 @@ for row in range(2, 1321):
                             testSheet['K' + newRow].value = checkRentOwn
                             testSheet['M' + newRow].value = time
                             testSheet['N' + newRow].value = category
-                            wb.save('LINC Demographics for LVAIC.xlsx')
+                            wb.save('LINC Demographics for LVAIC_2.xlsx')
                 elif service == 'DC':
                     if 'DC' in serviceName or 'Dual Career' in serviceName:
                         testSheet = wb.get_sheet_by_name('Test')
@@ -184,7 +179,7 @@ for row in range(2, 1321):
                         testSheet['K' + newRow].value = rentOwn
                         testSheet['M' + newRow].value = time
                         testSheet['N' + newRow].value = category
-                        wb.save('LINC Demographics for LVAIC.xlsx')
+                        wb.save('LINC Demographics for LVAIC_2.xlsx')
                     # If this current refRow is not the correct service, check the rows above and below for the correct service row
                     else:
                         refSheet = wb.get_sheet_by_name('Ref')
@@ -215,7 +210,7 @@ for row in range(2, 1321):
                             testSheet['K' + newRow].value = checkRentOwn
                             testSheet['M' + newRow].value = time
                             testSheet['N' + newRow].value = category
-                            wb.save('LINC Demographics for LVAIC.xlsx')
+                            wb.save('LINC Demographics for LVAIC_2.xlsx')
                         elif 'DC' in refSheet['D' + str(refRow + 1)].value or 'Dual Career' in refSheet[
                                     'D' + str(refRow + 1)].value:
                             checkCustomer = refSheet['B' + str(refRow + 1)].value
@@ -243,7 +238,7 @@ for row in range(2, 1321):
                             testSheet['K' + newRow].value = checkRentOwn
                             testSheet['M' + newRow].value = time
                             testSheet['N' + newRow].value = category
-                            wb.save('LINC Demographics for LVAIC.xlsx')
+                            wb.save('LINC Demographics for LVAIC_2.xlsx')
                 else:
                     return
 
@@ -267,7 +262,7 @@ for row in range(2, 1321):
                 testSheet['K' + newRow].value = rentOwn
                 testSheet['M' + newRow].value = time
                 testSheet['N' + newRow].value = category
-                wb.save('LINC Demographics for LVAIC.xlsx')
+                wb.save('LINC Demographics for LVAIC_2.xlsx')
             # In cases where the client is receiving multiple services, we need to split up any CT & DC entries between the
             # two rows, or we need to make sure CT time is placed in the CT row and DC time in the DC row
             if 'Yes' in refSheet['O'+str(refRow)].value:
@@ -275,6 +270,5 @@ for row in range(2, 1321):
             else:
                 newRow(serviceName)
         refSheet = wb.get_sheet_by_name('Ref')
-    wb.save('LINC Demographics for LVAIC.xlsx')
-    print('---- END OF ROW ----')
-wb.save('LINC Demographics for LVAIC.xlsx')
+    wb.save('LINC Demographics for LVAIC_2.xlsx')
+wb.save('LINC Demographics for LVAIC_2.xlsx')
